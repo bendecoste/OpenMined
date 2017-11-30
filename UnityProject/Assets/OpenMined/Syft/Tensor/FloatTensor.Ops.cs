@@ -253,52 +253,45 @@ namespace OpenMined.Syft.Tensor
             return result;
         }
 
-		public FloatTensor Sub(FloatTensor x)
-		{
-			// Check if both tensors are compatible for sum
-			SameSizeDimensionsShapeAndLocation(ref x);
+        public FloatTensor Sub(FloatTensor x)
+        {
+            // Check if both tensors are compatible for sum
+            SameSizeDimensionsShapeAndLocation(ref x);
 
-			FloatTensor result = new FloatTensor (shape, this.shader);
+            FloatTensor result = new FloatTensor (shape, this.shader);
 
-			if (dataOnGpu & x.dataOnGpu) {
-				result.Gpu ();
-				SubElemGPU (x, result);
-
-			} else {
-
-
-				var nCpu = SystemInfo.processorCount;
-				Parallel.For (0, nCpu, workerId => {
-					var max = size * (workerId + 1) / nCpu;
-					for (var i = size * workerId / nCpu; i < max; i++)
+            if (dataOnGpu & x.dataOnGpu) {
+                result.Gpu ();
+                SubElemGPU (x, result);
+            } else {
+                var nCpu = SystemInfo.processorCount;
+                Parallel.For (0, nCpu, workerId => {
+                    var max = size * (workerId + 1) / nCpu;
+                    for (var i = size * workerId / nCpu; i < max; i++)
                         result.Data [i] = Data [i] - x.Data [i];
-				});
+                });
+            }
 
-			}
+            return result;
+        }
 
-			return result;
-		}
+        public FloatTensor Sub(float value)
+        {
+            var result = new FloatTensor(shape, this.shader, false);
 
-		public FloatTensor Sub(float value)
-		{
-			var result = new FloatTensor(shape, this.shader, false);
-
-			if (dataOnGpu) {
-
-				result.Gpu ();
-				return SubScalarGPU (value, result);
-
-			} else {
-
-				var nCpu = SystemInfo.processorCount;
-				Parallel.For (0, nCpu, workerId => {
-					var max = size * (workerId + 1) / nCpu;
-					for (var i = size * workerId / nCpu; i < max; i++)
-                           result.Data [i] = Data [i] - value;
-				});
-			}
-			return result;
-		}
+            if (dataOnGpu) {
+                result.Gpu ();
+                return SubScalarGPU (value, result);
+            } else {
+                var nCpu = SystemInfo.processorCount;
+                Parallel.For (0, nCpu, workerId => {
+                    var max = size * (workerId + 1) / nCpu;
+                    for (var i = size * workerId / nCpu; i < max; i++)
+                        result.Data [i] = Data [i] - value;
+                });
+            }
+            return result;
+        }
 
 		public FloatTensor Sum(int dim)
 		{
