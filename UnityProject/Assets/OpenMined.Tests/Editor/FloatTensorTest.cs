@@ -590,7 +590,7 @@ namespace OpenMined.Tests
         }
 
         [Test]
-        public void ElementwiseSubtract()
+        public void ElementwiseSubtract1()
         {
             float[] data1 = { float.MinValue, -10, -1.5f, 0, 1.5f, 10, 20, float.MaxValue };
             int[] shape1 = {2, 4};
@@ -608,6 +608,27 @@ namespace OpenMined.Tests
 				Assert.AreEqual (current, tensor.Data [i]);
             }
         }
+
+        [Test]
+        public void ElementwiseSubtract2()
+        {
+            float[] data1 = { 10f, 20f, 30f, 40f };
+            int[] shape1 = {4};
+            var tensor1 = new FloatTensor(data1, shape1);
+
+            float[] data2 = { 1, 2, 3, 4 };
+            int[] shape2 = {4};
+            var tensor2 = new FloatTensor(data2, shape2);
+
+            var tensor = tensor1.Sub (tensor2);
+
+            for (int i = 0; i < tensor.Size; i++)
+            {
+                float current = tensor1.Data [i] - tensor2.Data [i];
+                Assert.AreEqual (current, tensor.Data [i]);
+            }
+        }
+
 
         [Test]
         public void ElementwiseSubtractUnequalSizes()
@@ -652,6 +673,25 @@ namespace OpenMined.Tests
 
 			Assert.That(() => tensor1.Sub(tensor2),
                 Throws.TypeOf<InvalidOperationException>());
+        }
+
+        [Test]
+        public void ElementwiseSubtractFloat()
+        {
+            float[] data1 = { 1, 2, 3, 4, 5, 6 };
+            int[] shape1 = { 6 };
+            var tensor1 = new FloatTensor(data1, shape1);
+
+            float[] data2 = { -1, 0, 1, 2, 3, 4 };
+            int[] shape2 = { 6 };
+
+            var expected = new FloatTensor(data2, shape2);
+            var actual = tensor1.Sub(2f);
+
+            for (int i = 0; i < expected.Size; i++)
+            {
+                Assert.AreEqual (expected.Data[i], actual.Data [i]);
+            }
         }
 //
 //        [Test]
