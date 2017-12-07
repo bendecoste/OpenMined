@@ -1,5 +1,10 @@
 OpenMined Unity Application
 =============================================
+
+[![Build Status](https://travis-ci.org/OpenMined/OpenMined.svg?branch=master)](https://travis-ci.org/OpenMined/OpenMined) 
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+
 Table of Contents:   
 
  * [Introduction](#introduction)
@@ -12,19 +17,21 @@ Table of Contents:
 
 OpenMined Unity Application applies the [PySyft](https://github.com/OpenMined/PySyft) library into a Unity Application. Please see the PySyft repository README.md for more details on the intent of OpenMined and to familiarize yourself more with the basic concepts of the project.
 
-Also check out the [Docs](https://github.com/OpenMined/Docs) for more information! We are working toward consolidating all the documentation to make it easier for new contributors. 
+Also check out the [Docs](https://github.com/OpenMined/Docs) for more information! We are working toward consolidating all the documentation to make it easier for new contributors.
 
 **Why Unity?**
 
 Unity has a few advantages that we are leveraging for this project
 
-1. It's portable. 
+1. It's portable.
 2. It's free
 3. It has versitile GPU access.  
-4. It can be used for high end graphics gmaing consoles (Playstation, XBox, etc)
+4. It can be used for high end graphics gaming consoles (Playstation, XBox, etc)
+
+More about this in the [corresponding file](https://github.com/OpenMined/OpenMined/blob/master/tutorials/WhyUnity.md) at tutorials folder
 
 **Marketplace Mechanics**  
-`TODO` 
+`TODO`
 
 ### Architecture
 
@@ -33,18 +40,18 @@ Unity has a few advantages that we are leveraging for this project
 ## Quick Setup
 
 1. Install Unity:
-    - Windows & Mac users: Download it from [here](https://store.unity.com/). 
+    - Windows & Mac users: Download it from [here](https://store.unity.com/).
     - Linux users: Download it from [here](http://beta.unity3d.com/download/ee86734cf592/public_download.html)
 
-note: If you do not already have one, you will have to create a Unity account when you open the Application for the first time.
+Note: If you do not already have one, you will have to create a Unity account when you open the Application for the first time. For new users, a Personal account should be ok. 
 
 2. Open project in Unity `[File -> Open Project -> Directory/To/OpenMined`]
 
 3. Open Juptyer Notebooks in the `notebooks` directory.  
 
-## Setup Troubleshooting 
+## Setup Troubleshooting
 
-If you have an issue, refer to the following steps for a more detailed project setup. These steps were confirmed to work under a Windows/linux enviornment, though the steps should be applicable to alternative operating systems. 
+If you have an issue, refer to the following steps for a more detailed project setup. These steps were confirmed to work under a Windows/linux enviornment, though the steps should be applicable to alternative operating systems.
 
 The steps come in two parts:   
 **Part 1:** Unity Setup   
@@ -53,22 +60,19 @@ The steps come in two parts:
 **Unity Setup**  
 
 1. Download Unity from [here](https://store.unity.com/) or [here](http://beta.unity3d.com/download/ee86734cf592/public_download.html)(linux)  
-  2. Open project in Unity `[Open(Top Right of Home Screen) -> Directory/To/OpenMined`]
-2. In the Project Pane (usually below), Double Click Assets/_Scenes/DefaultScene. If you can't find the file for some reason:
-- On the right menu: Check `Main Camera` object has `SyftServer.cs` component attached to it
-- On the bottom dialog: Go to `Assets/OpenMined/Network/Servers` drag `SyftServer.cs` to `Main Camera` object
-- Add a `Compute Shader` to the `Shader` variable of `SyftServer.cs` script
-- Go to `Assets/OpenMined/Syft/Math/Shaders` drag `NewComputeShader` to `SyftServer (Script)` component recently attached to `Main Camera`
+2. Open project in Unity `[Open(Top Right of Home Screen) -> Directory/To/OpenMined`]
+3. In the Project Pane (usually below), double click OpenMinedMain. If you can't find the file for some reason, check the trouble shooting section.
 4. Hit `Play` on the Unity Editor
 
 **Jupyter Setup**
 
-1. Open `basic-python-network-gpu.ipynb` 
-2. Run the Jupyter Notebook
+1. Run `jupyter notebook` from you openmined directory
+2. Open [Syft Tensor Example Notebook.ipynb](https://github.com/OpenMined/OpenMined/blob/master/notebooks/Syft%20Tensor%20Example%20Notebook.ipynb)
+3. Run the notebook
 
 ### For OSX (High Sierra)
 
-Same steps as above. Download Unity from [here](https://store.unity.com/). I chose the personal version. This will provide you a .dmg installer, which will download and install the necessary components (~800mb). 
+Same steps as above. Download Unity from [here](https://store.unity.com/). I chose the personal version. This will provide you a .dmg installer, which will download and install the necessary components (~800mb).
 
 **If on OSX turn on Metal Support**  
 
@@ -78,7 +82,13 @@ Same steps as above. Download Unity from [here](https://store.unity.com/). I cho
 
 ## General Troubleshooting
 
-1) *If my applications do not seem to be communicating between eachother...*
+1) *If OpenMinedMain is missing*
+- On the right menu: Check `Main Camera` object has `SyftServer.cs` component attached to it
+- On the bottom dialog: Go to `OpenMined/Network/Servers` drag `SyftServer.cs` to `Main Camera` object
+- Add a `Compute Shader` to the `Shader` variable of `SyftServer.cs` script
+- Go to `OpenMined/Syft/Math/Shaders` drag `FloatTensorShaders` to `SyftServer (Script)` component recently attached to `Main Camera`
+
+2) *If my applications do not seem to be communicating between eachother...*
 
 **Check if the Server is running...**
 ___
@@ -110,7 +120,7 @@ Unity   1709 user   38u  IPv4 0x59e297c6d0d734e31      0t0  TCP *:personal-agent
 ```
 ---
 
-2) *My application randomly stops working.*   
+3) *My application randomly stops working.*   
 
 **Jupyter Notebook only works if Unity has focus**  
 	By default, the "Run in background" options is disabled. So if the Unity Editor loses focus then the Jupyter Notebook won't work.
@@ -131,4 +141,3 @@ Go to Edit -> Project Settings -> Player. The inspector pane will now change to 
 ## References
 
 [1] [stop unity pausing when it loses focus](https://answers.unity.com/questions/42509/stop-unity-pausing-when-it-loses-focus.html)
-
