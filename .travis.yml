@@ -12,9 +12,6 @@ notifications:
 
 # run the script to download and install Unity editor using Homebrew's python (openssl)
 install:
-  - brew update
-  - brew upgrade openssl
-  - brew link --force openssl
   - sudo /usr/local/bin/python2 scripts/install-unity.py 2017.2
 
 # run the script for unit tests and builds
@@ -33,3 +30,7 @@ jobs:
       script: sh scripts/test.sh
       language: generic
       os: osx
+      before_install:
+        - brew update
+        - brew upgrade openssl
+        - brew link --force openssl
